@@ -19,7 +19,7 @@ namespace CardTemplate
 
         public override void Deal(Card card, Player player, bool facedDown)
         {
-            throw new NotImplementedException();
+            player.AddCardToHand(card);
         }
 
         public override void Deal(Card card, bool facedDown)
@@ -39,12 +39,16 @@ namespace CardTemplate
 
         public override void Shuffle()
         {
-            throw new NotImplementedException();
+            foreach (Card card in initialCards)
+            {
+
+                deck.Push(card);
+            }
         }
 
         public override void UpdatePot(int amount)
         {
-            throw new NotImplementedException();
+            pot = pot + amount;
         }
     }
 }
