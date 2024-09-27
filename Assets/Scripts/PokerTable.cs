@@ -24,7 +24,8 @@ namespace CardTemplate
 
         public override void Deal(Card card, bool facedDown)
         {
-            throw new NotImplementedException();
+            AddCardToCommonPool(card,facedDown);
+          
         }
 
         public override void DefineWinner()
@@ -39,7 +40,27 @@ namespace CardTemplate
 
         public override void Shuffle()
         {
-            foreach (Card card in initialCards)
+           // List <Card> carteInitiale = initialCards;
+            List<Card> carte_melangé = new List<Card>();
+            int nbr_aleatoire ; 
+
+            System.Random rnd = new System.Random();
+
+            for (int i = 0; i < initialCards.Count; i++)
+            {
+                nbr_aleatoire = rnd.Next(0,initialCards.Count);
+                if (carte_melangé.Contains( initialCards[nbr_aleatoire]))
+                {
+
+                }
+                else
+                {
+                    carte_melangé.Add(initialCards[nbr_aleatoire]);
+                }
+            }
+
+
+            foreach (Card card in carte_melangé)
             {
 
                 deck.Push(card);
