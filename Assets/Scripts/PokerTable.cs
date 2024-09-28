@@ -14,6 +14,7 @@ namespace CardTemplate
     {
         public override List<Player> CalculateWinner()
         {
+            
             throw new NotImplementedException();
         }
 
