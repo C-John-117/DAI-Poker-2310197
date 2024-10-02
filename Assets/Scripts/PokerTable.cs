@@ -34,6 +34,7 @@ namespace CardTemplate
                 {
                     handPlayer.AddCard(card);
                 }
+                handPlayer.SortHand();
                 y = handPlayer.CalculateHandValue();
 
                 if(y > x)

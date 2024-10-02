@@ -13,6 +13,7 @@ namespace CardTemplate
     {
         public override long CalculateHandValue()
         {
+            long valeurMain = 0;
             /*Note personnelle : 
              * Add ajoute un seul élement à la fois 
              * AddRange : ajoute une liste ou un tableau, 
@@ -35,39 +36,46 @@ namespace CardTemplate
 
             carteEnMain_handTotale = GetAllCards();
 
+            valeurMain = QuinteFlush(carteEnMain_handTotale);
+
             return 0;
 
         }
 
         public long QuinteFlush(List<Card> les7Cartes)
         {
-            // trie par ordre croissant
-            les7Cartes.Sort();
-            long valeurDeCetteMain=0;
+            // Avec SortHand, les cartes sont déja triées par ordre croissant
+
+            long valeurDeCetteMain = 0;
             List<Card> suitIdentique = new List<Card>();
 
-            if (les7Cartes[6].GetMaxValue() == 10) 
-            {
-                //for (int i = 0; i < les7Cartes.Count - 1; i++)
-                for (int i = 0; i < 4; i++)
-                {
-                    // si c'est de même symbole ,
-                    if (les7Cartes[i].GetSuit() == les7Cartes[i + 1].GetSuit())
-                    {
-                        if (i == 3 && les7Cartes[i].GetSuit() == les7Cartes[i + 1].GetSuit())
-                        {
-                            suitIdentique.Add(les7Cartes[i + 1]);
 
-                        }
-                        suitIdentique.Add(les7Cartes[i]);
+            //for (int i = 0; i < les7Cartes.Count - 1; i++)
+            for (int i = 0; i < les7Cartes.Count - 1; i++)
+            {
+                // si c'est de même symbole on ajoute dans la liste
+                if (les7Cartes[i].GetSuit() == les7Cartes[i + 1].GetSuit())
+                {
+                    suitIdentique.Add(les7Cartes[i]);
+
+                    // pour ajouter le dernier element de la liste si il doit l'être
+                    if (suitIdentique.Count == 4 || i==5)
+                    {
+                        suitIdentique.Add(les7Cartes[i + 1]);
+                        break;
                     }
                 }
-
-                foreach (Card card in suitIdentique)
+                else
                 {
-                    valeurDeCetteMain = card.GetMaxValue() + valeurDeCetteMain;
+                    suitIdentique.Clear();
                 }
             }
+
+            foreach (Card card in suitIdentique)
+            {
+                valeurDeCetteMain = card.GetMaxValue() + valeurDeCetteMain;
+            }
+
 
             return valeurDeCetteMain;
         }
