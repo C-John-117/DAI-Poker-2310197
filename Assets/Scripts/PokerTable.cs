@@ -14,9 +14,46 @@ namespace CardTemplate
     {
         public override List<Player> CalculateWinner()
         {
-            
-            throw new NotImplementedException();
+            List<Player> list = new List<Player>();
+            long x = 0;
+            long y;
+
+            foreach(Player player in activePlayers)
+            {
+                Hand handPlayer = new PokerHand();
+
+                handPlayer = player.GetHand();
+
+                foreach(Card carte in player.GetHand().GetAllCards())
+                {
+                    handPlayer.AddCard(carte);
+                }
+                // creer un hand pour les cartes que le joueur a en main
+
+                foreach (Card card in commonPool)
+                {
+                    handPlayer.AddCard(card);
+                }
+                y = handPlayer.CalculateHandValue();
+
+                if(y > x)
+                {
+                    x = y;
+                    list.Clear();
+                    list.Add(player);
+                }
+
+                else if(y == x)
+                {
+                    list.Add(player);
+                }
+                
+            }
+
+            return list;
         }
+
+     
 
         public override void Deal(Card card, Player player, bool facedDown)
         {

@@ -262,7 +262,7 @@ namespace CardTemplate
 
             commonPoolList.Add(card);
             commonPoolRenderers[commonPoolList.Count - 1].sprite = cardSprite;
-            
+
             //Animation de distribution de cartes
             Vector3 initialPosition = commonPoolRenderers[commonPoolList.Count - 1].transform.position;
             Quaternion initialRotation = commonPoolRenderers[commonPoolList.Count - 1].transform.rotation;
@@ -286,12 +286,12 @@ namespace CardTemplate
             currentMaxBet = 0;
             Player firstPlayer = playerOrder[0];
             int firstPlayerIndex = firstPlayer.playerNumber;
-                    
-            
+
+
             if (phase != 0)
             {
                 firstPlayer = players[firstPlayerIndex];
-                for(int i = firstPlayerIndex;i < firstPlayerIndex + players.Count; i++)
+                for (int i = firstPlayerIndex; i < firstPlayerIndex + players.Count; i++)
                 {
                     if (activePlayers.Contains(players[i]))
                     {
@@ -301,7 +301,7 @@ namespace CardTemplate
                 }
             }
 
-            if(firstPlayer.isAllIn)
+            if (firstPlayer.isAllIn)
             {
                 firstPlayer = GetNextActivePlayer(firstPlayer);
             }
@@ -318,20 +318,20 @@ namespace CardTemplate
 
         public void GoToNextPlayerBet(Player nextPlayer, bool getNext = false)
         {
-            if(getNext)
+            if (getNext)
             {
                 nextPlayer = GetNextActivePlayer(nextPlayer);
             }
             bool isTurnFinished = true;
 
-            foreach(Player player in activePlayers)
+            foreach (Player player in activePlayers)
             {
-                if(!player.isAllIn && (player.GetCurrentBet() != currentMaxBet || !player.hasPlayed))
+                if (!player.isAllIn && (player.GetCurrentBet() != currentMaxBet || !player.hasPlayed))
                 {
                     isTurnFinished = false;
                 }
             }
-            if(activePlayers.Count == 1)
+            if (activePlayers.Count == 1)
             {
                 EndRound();
             }
@@ -359,14 +359,14 @@ namespace CardTemplate
 
         protected Player GetNextActivePlayer(Player currentPlayer)
         {
-            int currentPlayerIndex =  activePlayers.IndexOf(currentPlayer);
+            int currentPlayerIndex = activePlayers.IndexOf(currentPlayer);
             Player nextPlayer = activePlayers[(currentPlayerIndex + 1) % activePlayers.Count];
             if (nextPlayer.isAllIn && !nextPlayer.hasPlayed)
             {
                 nextPlayer.hasPlayed = true;
                 return GetNextActivePlayer(nextPlayer);
             }
-            
+
             return nextPlayer;
         }
 
@@ -461,5 +461,13 @@ namespace CardTemplate
             }
         }
         #endregion
+
+
+  
+
+        public IEnumerable<Card> GetCommonPool()
+        {
+            return commonPool;
+        }
     }
 }

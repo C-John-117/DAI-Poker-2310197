@@ -14,9 +14,16 @@ namespace CardTemplate
         public enum Suit
         {
             Heart,
-            Diamond,
+            Diamond,  
             Club,
             Spade
+
+                /* Note perso 
+                 * Heart (Cœur) : ??
+                 * Diamond (Carreau) : ??
+                 * Club (Trèfle) : ??
+                 * Spade (Pique) : ??
+                */
         }
 
         public enum State
@@ -27,7 +34,7 @@ namespace CardTemplate
         }
 
         [SerializeField] Sprite faceUpSprite;
-        [SerializeField] Suit suit;
+        [SerializeField] Suit suit; // représente le Coeur, Carreau, Trèfle, Pique
         [SerializeField] int minValue = 0;
         [SerializeField] int maxValue;
         [SerializeField] State state = State.Empty;
