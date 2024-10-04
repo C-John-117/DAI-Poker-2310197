@@ -13,48 +13,86 @@ namespace CardTemplate
     public class PokerTable : Table
     {
         public override List<Player> CalculateWinner()
-        {
+
+        { // Cette partie je l'ai faite avec mon Camarade Jordy, nous avons mis nos connaissances en commun
+
             List<Player> list = new List<Player>();
             long x = 0;
             long y;
 
-            foreach(Player player in activePlayers)
+            foreach (Player player in activePlayers)
             {
+                List<long> nbHandValue = new List<long>();
+
                 Hand handPlayer = new PokerHand();
+                PokerHand handTemp = new PokerHand();
 
-                handPlayer = player.GetHand();
-
-                foreach(Card carte in player.GetHand().GetAllCards())
+                foreach (Card card1 in player.GetHand().GetAllCards())
                 {
-                    handPlayer.AddCard(carte);
+                    handTemp.AddCard(card1);
                 }
-                // creer un hand pour les cartes que le joueur a en main
 
                 foreach (Card card in commonPool)
                 {
-                    handPlayer.AddCard(card);
+                    handTemp.AddCard(card);
                 }
-                handPlayer.SortHand();
-                y = handPlayer.CalculateHandValue();
 
-                if(y > x)
+                for (int i = 0; i <= 6; i++)
+                {
+                    handPlayer.AddCard(handTemp.GetCardX(i));
+                    for (int j = i + 1; j <= 6; j++)
+                    {
+                        handPlayer.AddCard(handTemp.GetCardX(j));
+
+                        for (int k = j + 1; k <= 6; k++)
+                        {
+                            handPlayer.AddCard(handTemp.GetCardX(k));
+
+                            for (int l = k + 1; l <= 6; l++)
+                            {
+                                handPlayer.AddCard(handTemp.GetCardX(l));
+
+                                for (int m = l + 1; m <= 6; m++)
+                                {
+                                    handPlayer.AddCard(handTemp.GetCardX(m));
+
+                                    nbHandValue.Add(handPlayer.CalculateHandValue());
+
+                                    handPlayer.GetAllCards().RemoveAt(m);
+                                }
+
+                                handPlayer.GetAllCards().RemoveAt(l);
+                            }
+
+                            handPlayer.GetAllCards().RemoveAt(k);
+                        }
+
+                        handPlayer.GetAllCards().RemoveAt(j);
+                    }
+
+                    handPlayer.GetAllCards().RemoveAt(i);
+                }
+                nbHandValue.Sort();
+
+                y = nbHandValue[nbHandValue.Count - 1];
+
+                if (y > x)
                 {
                     x = y;
                     list.Clear();
                     list.Add(player);
                 }
 
-                else if(y == x)
+                else if (y == x)
                 {
                     list.Add(player);
                 }
-                
             }
 
             return list;
         }
 
-     
+
 
         public override void Deal(Card card, Player player, bool facedDown)
         {
@@ -72,9 +110,17 @@ namespace CardTemplate
             throw new NotImplementedException();
         }
 
+
+        // demander si c correct 
         public override void GiveChipToWinners(List<Player> winners)
         {
-            throw new NotImplementedException();
+            int montantAPartager = 0;
+            montantAPartager = pot / winners.Count;
+
+            foreach (Player player in winners)
+            {
+                player.AddToChipCount(montantAPartager);
+            }
         }
 
         public override void Shuffle()

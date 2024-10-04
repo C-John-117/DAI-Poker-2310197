@@ -46,7 +46,8 @@ namespace CardTemplate
         {
             // Avec SortHand, les cartes sont déja triées par ordre croissant
 
-            long valeurDeCetteMain = 0;
+            long valeurDeCetteMain = 7000000;
+          //  long valeurDeCetteMain =0;
             List<Card> suitIdentique = new List<Card>();
 
 
@@ -75,8 +76,6 @@ namespace CardTemplate
             {
                 valeurDeCetteMain = card.GetMaxValue() + valeurDeCetteMain;
             }
-
-
             return valeurDeCetteMain;
         }
     }
