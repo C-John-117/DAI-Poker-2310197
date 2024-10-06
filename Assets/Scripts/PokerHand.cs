@@ -44,10 +44,12 @@ namespace CardTemplate
 
         public long QuinteFlush(List<Card> les7Cartes)
         {
-            // Avec SortHand, les cartes sont déja triées par ordre croissant
+            // Cette fonction je l'avais faite avant que vous ne nous disiez de ne travailler qu'avec une main de 5 cartes
+            // j'ai toute fois décider de la garder pour continuer d'avancer 
 
-            long valeurDeCetteMain = 7000000;
-          //  long valeurDeCetteMain =0;
+            long valeurDeCetteMain = 0;
+            bool qtTrouvé = false;
+            //  long valeurDeCetteMain =0;
             List<Card> suitIdentique = new List<Card>();
 
 
@@ -60,7 +62,7 @@ namespace CardTemplate
                     suitIdentique.Add(les7Cartes[i]);
 
                     // pour ajouter le dernier element de la liste si il doit l'être
-                    if (suitIdentique.Count == 4 || i==5)
+                    if (suitIdentique.Count == 4 || i == 5)
                     {
                         suitIdentique.Add(les7Cartes[i + 1]);
                         break;
@@ -75,8 +77,92 @@ namespace CardTemplate
             foreach (Card card in suitIdentique)
             {
                 valeurDeCetteMain = card.GetMaxValue() + valeurDeCetteMain;
+                qtTrouvé = true;
+            }
+            if (qtTrouvé == true)
+            {
+                valeurDeCetteMain = 100000000 + valeurDeCetteMain;
             }
             return valeurDeCetteMain;
+        }
+
+        // S.F = toutes les cartes de la même suit et dans l'ordre
+        public long StraightFlush(List<Card> les5Cartes)
+        {
+            /*
+             * Recevant une liste trié, si la premiere carte est différent de toutes les autres, alors 
+            / d'office nous ne sommes pas en présence d'un StraightFlush
+            */
+
+            long valeurStraight = 0;
+            int compteur = 1;
+
+            for (int i = 0; i < les5Cartes.Count - 1; i++)
+            {
+
+                if (les5Cartes[0].GetSuit() == les5Cartes[i + 1].GetSuit())
+                {
+                    compteur = compteur + 1;
+
+                }
+            }
+
+            // Si mon compteur = 5 cela voudrait dire que toutes les 5 cartes sont de même couleur
+
+            if (compteur == 5)
+            {
+                if (les5Cartes[0].GetMaxValue() == les5Cartes[4].GetMaxValue() + 4)
+                {
+                    foreach (Card card in les5Cartes)
+                    {
+                        valeurStraight += card.GetMaxValue();
+                    }
+                    valeurStraight = 90000000 + valeurStraight;
+                }
+            }
+            return valeurStraight;
+
+        }
+
+        //F.O.A.K = 4 cartes de même valeur  
+
+        public long FourOfAKind(List<Card> les5Cartes)
+        {
+            long valeurFOAK =0;
+
+            int compteur = 1;
+
+            int valeurCarteDifferente=0;
+
+            for (int i = 0; i < les5Cartes.Count - 1; i++)
+            {
+                if (les5Cartes[i].GetMaxValue() == les5Cartes[i + 1].GetMaxValue())
+                {
+                    compteur++;
+                    valeurFOAK = les5Cartes[i].GetMaxValue();
+                }
+                else
+                {
+                    /*
+                     * Etant donné que nous sommes dans un FOAK, la carte differente des autres 
+                     * sera soit la premiere carte, soit la derniere carte.
+                     */
+                    if (i == 0)
+                    {
+                        valeurCarteDifferente = les5Cartes[0].GetMaxValue();
+                    }
+                    else if (i == 3)
+                    {
+                        valeurCarteDifferente = les5Cartes[4].GetMaxValue();
+                    }
+                }
+            }
+
+            if (compteur == 4)
+            {
+                valeurFOAK = 80000000  + valeurCarteDifferente + (valeurFOAK * 4);
+            }
+            return valeurFOAK;
         }
     }
 }

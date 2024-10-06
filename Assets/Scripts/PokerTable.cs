@@ -55,7 +55,7 @@ namespace CardTemplate
                                 for (int m = l + 1; m <= 6; m++)
                                 {
                                     handPlayer.AddCard(handTemp.GetCardX(m));
-
+                                    handPlayer.SortHand();
                                     nbHandValue.Add(handPlayer.CalculateHandValue());
 
                                     handPlayer.GetAllCards().RemoveAt(m);
