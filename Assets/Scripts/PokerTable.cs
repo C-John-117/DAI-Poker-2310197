@@ -58,19 +58,19 @@ namespace CardTemplate
                                     handPlayer.SortHand();
                                     nbHandValue.Add(handPlayer.CalculateHandValue());
 
-                                    handPlayer.GetAllCards().RemoveAt(m);
+                                    handPlayer.GetAllCards().RemoveAt(4);
                                 }
 
-                                handPlayer.GetAllCards().RemoveAt(l);
+                                handPlayer.GetAllCards().RemoveAt(3);
                             }
 
-                            handPlayer.GetAllCards().RemoveAt(k);
+                            handPlayer.GetAllCards().RemoveAt(2);
                         }
 
-                        handPlayer.GetAllCards().RemoveAt(j);
+                        handPlayer.GetAllCards().RemoveAt(1);
                     }
 
-                    handPlayer.GetAllCards().RemoveAt(i);
+                    handPlayer.GetAllCards().RemoveAt(0);
                 }
                 nbHandValue.Sort();
 
