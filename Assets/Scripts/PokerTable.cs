@@ -101,13 +101,30 @@ namespace CardTemplate
 
         public override void Deal(Card card, bool facedDown)
         {
-            AddCardToCommonPool(card,facedDown);
-          
+            AddCardToCommonPool(card, facedDown);
+
         }
 
         public override void DefineWinner()
         {
-            throw new NotImplementedException();
+             
+            List<Player> listJoueur = new List<Player>();
+            foreach (Player player in playerOrder)
+            {
+                listJoueur.Add(player);
+            }
+            // le premier joueur est celui qui a la plus grande main
+
+
+            UIManager.Instance.ChangeWinnerText(listJoueur, 00);
+            if(listJoueur.Count == 1)
+            {
+                Player p;
+                p = listJoueur[0];
+               
+                    UIManager.Instance.ShowWinner(p);
+                    UIManager.Instance.EndRound();
+            }
         }
 
 
@@ -125,16 +142,16 @@ namespace CardTemplate
 
         public override void Shuffle()
         {
-           // List <Card> carteInitiale = initialCards;
+            // List <Card> carteInitiale = initialCards;
             List<Card> carte_melangé = new List<Card>();
-            int nbr_aleatoire ; 
+            int nbr_aleatoire;
 
             System.Random rnd = new System.Random();
 
             for (int i = 0; i < initialCards.Count; i++)
             {
-                nbr_aleatoire = rnd.Next(0,initialCards.Count);
-                if (carte_melangé.Contains( initialCards[nbr_aleatoire]))
+                nbr_aleatoire = rnd.Next(0, initialCards.Count);
+                if (carte_melangé.Contains(initialCards[nbr_aleatoire]))
                 {
 
                 }
